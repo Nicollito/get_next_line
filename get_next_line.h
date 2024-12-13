@@ -6,22 +6,26 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:07:43 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/12 15:18:26 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:28:11 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stdlib.h>
-
-#ifndef BUFFER_SIZE 
-# define BUFFER_SIZE 1
+#ifndef    BUFFER_SIZE
+# define BUFFER_SIZE 42
 #endif
 
-char		*get_next_line(int fd);
-char		**ft_split(char const *s);
-char		*ft_strjoin(char const *s1, char const *s2);
-int			ft_strlen(char *s);
+# include <string.h>
+# include <unistd.h>
+# include <stdlib.h>
+
+char    *get_next_line(int fd);
+char    *ft_strjoin(char const *s1, char const *s2);
+char    *ft_strchr(const char *s);
+size_t    ft_strlen(const char *s);
+char    *ft_strdup(const char *s);
+char    *ft_strccpy(char *line);
 
 #endif

@@ -6,113 +6,105 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:55:03 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/12 15:25:47 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:27:57 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char    *ft_substr(char const *s, unsigned int start, size_t len)
+char    *ft_strjoin(char const *s1, char const *s2)
 {
-    unsigned int    i;
-    char            *string;
+    char    *str;
+    char    *res;
+
+    if (!s1)
+        return ((char *)s2);
+    if (!s2)
+        return ((char *)s1);
+    str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+    if (!str)
+        return (NULL);
+    res = str;
+    while (*s1)
+        *str++ = *s1++;
+    while (*s2)
+        *str++ = *s2++;
+    *str = '\0';
+    return (res);
+}
+
+char    *ft_strchr(const char *s)
+{
+    int        i;
 
     i = 0;
-    if (!s)
-        return (NULL);
-    if (start >= ft_strlen(s))
-        len = 0;
-    if (len >= ft_strlen(s) - start)
-        len = ft_strlen(s) - start;
-    string = (char *)malloc(sizeof(char) * len + 1);
-    if (string == NULL)
-        return (NULL);
-    while (len > 0)
+    while (s[i])
     {
-        string[i] = s[start];
+        if (s[i] == '\n')
+            return ((char *) &s[i]);
         i++;
-        start++;
-        len--;
     }
-    string[i] = '\0';
-    return (string);
+    if (s[i] == '\n')
+        return ((char *) &s[i]);
+    return (NULL);
 }
 
-static char	**free_split(char **res)
+char    *ft_strdup(const char *s)
 {
-	unsigned int	i;
+    int        i;
+    char    *dest;
 
-	i = 0;
-	while (res[i] != NULL)
-	{
-		free(res[i]);
-		res[i] = NULL;
-		i++;
-	}
-	free(res);
-	res = NULL;
-	return (res);
+    dest = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+    if (dest == 0)
+    {
+        return (0);
+    }
+    i = 0;
+    while (s[i] != '\0')
+    {
+        dest[i] = s[i];
+        i++;
+    }
+    dest[i] = '\0';
+    return (dest);
 }
 
-static char	**fill_tab(unsigned int words, char **res, char const *s, char c)
+size_t    ft_strlen(const char *s)
 {
-	unsigned int	i;
-	unsigned int	start;
-	unsigned int	wlen;
+    size_t    i;
 
-	i = 0;
-	start = 0;
-	wlen = 0;
-	while (i < words)
-	{
-		while (s[start] && s[start] == c)
-			start++;
-		wlen = start;
-		while (s[wlen] && s[wlen] != c)
-			wlen++;
-		res[i] = ft_substr(s, start, wlen - start);
-		if (!res[i])
-		{
-			res = free_split(res);
-			return (res);
-		}
-		start = wlen;
-		i++;
-	}
-	res[i] = NULL;
-	return (res);
+    i = 0;
+    while (s[i] != '\0')
+    {
+        i++;
+    }
+    return (i);
 }
 
-char	**ft_split(char const *s)
+char    *ft_strccpy(char *line)
 {
-	char			**res;
+    int        i;
+    char    *tmp;
 
-	res = malloc(sizeof(char *) * 3);
-	if (!res)
-		return (NULL);
-	res = fill_tab(2, res, s, '\n');
-	if (res == NULL)
-		return (NULL);
-	return (res);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*str;
-	char	*res;
-
-	if (!s1)
-		return ((char *)s2);
-	if (!s2)
-		return ((char *)s1);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
-		return (NULL);
-	res = str;
-	while (*s1)
-		*str++ = *s1++;
-	while (*s2)
-		*str++ = *s2++;
-	*str = '\0';
-	return (res);
+    i = 0;
+    while (line[i] && line[i] != '\n')
+        i++;
+    if (line[i] == '\n')
+        i++;
+    tmp = malloc(sizeof(char) * i + 1);
+    if (!tmp)
+        return (NULL);
+    i = 0;
+    while (line[i] && line[i] != '\n')
+    {
+        tmp[i] = line[i];
+        i++;
+        if (line[i] == '\n')
+            {
+                tmp[i] = line[i];
+            }
+    }
+    i++;
+    tmp[i] = '\0';
+    return (tmp);
 }
