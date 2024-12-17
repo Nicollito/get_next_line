@@ -6,7 +6,7 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:55:08 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/16 14:26:02 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:27:23 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_next_line(int fd)
 {
 	static char	*nextl;
 	char		*line;
-	char	*buffer;
+	char		*buffer;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
@@ -30,9 +30,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	line = fill_line(fd, nextl, buffer);
-	nextl = line;
 	if (!line)
 		return (NULL);
+	nextl = line;
 	free(buffer);
 	line = ft_strccpy(line);
 	nextl = ft_strchr(nextl);

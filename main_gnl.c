@@ -6,20 +6,21 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:06:53 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/16 14:06:53 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:17:18 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
+#include <mcheck.h>
 
 int main(void)
 {
     int fd;
     char *line;
 
-    fd = open("nbr2.txt", O_RDONLY);
+    fd = open("nbr.txt", O_RDONLY);
     if (fd == -1)
     {
         printf("Erreur lors de l'ouverture du fichier\n");
