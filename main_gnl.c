@@ -6,7 +6,7 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:06:53 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/17 10:17:18 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:55:10 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int main(void)
 		printf("%s", line);
 		free(line);
 	}
-	// free(line);
+	printf("%s", line);
+	free(line);
     close(fd);
     return (0);
 }

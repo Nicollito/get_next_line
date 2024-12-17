@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/11 12:55:03 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/17 09:56:35 by nimadela         ###   ########.fr       */
+/*   Created: 2024/12/17 14:18:19 by nimadela          #+#    #+#             */
+/*   Updated: 2024/12/17 15:37:46 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,76 +33,40 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-char	*ft_strchr(const char *s)
+void	ft_strcpy(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
+	while (s1[i] && s2[i])
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+}
+
+int	check_line(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
 	{
 		if (s[i] == '\n')
-			return ((char *) &s[i + 1]);
+			return (i);
 		i++;
 	}
-	if (s[i] == '\n')
-		return ((char *) &s[i + 1]);
-	return (NULL);
+	return (0);
 }
 
-char    *ft_strdup(const char *s)
+ssize_t	ft_strlen(char const *s)
 {
-    int        i;
-    char    *dest;
-
-    dest = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
-    if (!dest)
-        return (NULL);
-    i = 0;
-    while (s[i])
-    {
-        dest[i] = s[i];
-        i++;
-    }
-    dest[i] = '\0';
-    return (dest);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
-	{
+	while (s[i])
 		i++;
-	}
 	return (i);
-}
-
-char	*ft_strccpy(char *line)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (line[i] == '\n')
-		i++;
-	tmp = malloc(sizeof(char) * i + 1);
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	while (line[i] && line[i] != '\n')
-	{
-		tmp[i] = line[i];
-		i++;
-	}
-	if (line[i] == '\n')
-	{
-		tmp[i] = line[i];
-		i++;
-	}
-	tmp[i] = '\0';
-	return (tmp);
 }
