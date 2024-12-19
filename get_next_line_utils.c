@@ -6,46 +6,32 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 14:18:19 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/17 15:37:46 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:09:12 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*str;
-	char	*res;
-
-	if (!s1)
-		return ((char *)s2);
-	if (!s2)
-		return ((char *)s1);
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
-		return (NULL);
-	res = str;
-	while (*s1)
-		*str++ = *s1++;
-	while (*s2)
-		*str++ = *s2++;
-	*str = '\0';
-	return (res);
-}
-
-void	ft_strcpy(char *s1, char *s2)
+char	*ft_strcpy_until(char *dest, char *src, char delim)
 {
 	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i])
+	while (src[i])
 	{
-		s1[i] = s2[i];
+		dest[i] = src[i];
+		if (src[i] == '\n')
+		{
+			i++;
+			break ;
+		}
 		i++;
 	}
+	dest[i] = '\0';
+	return (dest);
 }
 
-int	check_line(char *s)
+ssize_t	ft_strlen(char *s)
 {
 	int	i;
 
@@ -53,20 +39,32 @@ int	check_line(char *s)
 	if (!s)
 		return (0);
 	while (s[i])
-	{
-		if (s[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-ssize_t	ft_strlen(char const *s)
-{
-	ssize_t	i;
-
-	i = 0;
-	while (s[i])
 		i++;
 	return (i);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+
+	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!res)
+		return (NULL);
+	while (s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		res[i + j] = s2[j];
+		j++;
+	}
+	res[i + j] = '\0';
+	return (res);
 }

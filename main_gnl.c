@@ -6,7 +6,7 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:06:53 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/17 13:55:10 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:29:33 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ int main(void)
         return (1);
     }
 
-	while ((line = get_next_line(fd)))
+/* 	while ((line = get_next_line(fd)))
 	{
 		printf("%s", line);
 		free(line);
-	}
+	} */
+/* 	line = get_next_line(fd);
 	printf("%s", line);
-	free(line);
+	free(line); */
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
     close(fd);
     return (0);
 }
