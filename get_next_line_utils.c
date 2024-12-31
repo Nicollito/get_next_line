@@ -6,7 +6,7 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 14:18:19 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/19 18:09:12 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:06:30 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,30 @@ char	*ft_strcpy_until(char *dest, char *src, char delim)
 	int	i;
 
 	i = 0;
-	while (src[i])
+	while (src[i] && src[i] != delim)
 	{
 		dest[i] = src[i];
-		if (src[i] == '\n')
-		{
-			i++;
-			break ;
-		}
+		i++;
+	}
+	if (src[i] == delim && delim != '\0')
+	{
+		dest[i] = src[i];
 		i++;
 	}
 	dest[i] = '\0';
 	return (dest);
 }
 
-ssize_t	ft_strlen(char *s)
+ssize_t	ft_strlen(char *s, char c)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i])
+	while (s[i] && s[i] != c)
+		i++;
+	if (s[i] == c && c != '\0')
 		i++;
 	return (i);
 }
@@ -51,8 +53,11 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-
-	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!s1)
+		return (NULL);
+	if (!s2)
+		return (NULL);
+	res = malloc(sizeof(char) *(ft_strlen(s1, '\0') + ft_strlen(s2, '\0')) + 1);
 	if (!res)
 		return (NULL);
 	while (s1[i])
@@ -67,4 +72,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	res[i + j] = '\0';
 	return (res);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*ptr;
+	unsigned int	i;
+
+	ptr = s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 14:17:53 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/19 18:44:44 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:09:16 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_line(char *s)
 	while (s[i])
 	{
 		if (s[i] == '\n')
-			return (i);
+			return (1);
 		i++;
 	}
 	return (0);
@@ -34,17 +34,20 @@ char	*fill_line(int fd, char *stash)
 	char	*res;
 	char	*tmp;
 
-	tmp = malloc(sizeof(char) * ft_strlen(stash) + 1);
+	tmp = malloc(sizeof(char) * ft_strlen(stash, '\0') + 1);
 	if (!tmp)
 		return (NULL);
 	ft_strcpy_until(tmp, stash, '\0');
-	res = NULL;
 	b_read = 1;
 	while (b_read && !check_line(stash))
 	{
 		b_read = read(fd, stash, BUFFER_SIZE);
-		if (b_read == -1)
-			return (NULL);
+		if (b_read < 0)
+		{
+			free(tmp);
+			return (ft_bzero(stash, ft_strlen(stash, '\0')), NULL);
+		}
+		stash[b_read] = '\0';
 		res = ft_strjoin(tmp, stash);
 		free(tmp);
 		if (!res)
@@ -77,7 +80,20 @@ char	*fill_stash(char *buffer, char *stash)
 		i++;
 	}
 	stash[j] = '\0';
+	free(buffer);
 	return (stash);
+}
+
+char	*get_my_line(char *line, char *buffer, char *stash)
+{
+	ft_strcpy_until(line, buffer, '\n');
+	fill_stash(buffer, stash);
+	if (!ft_strlen(line, '\0'))
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
 }
 
 char	*get_next_line(int fd)
@@ -86,15 +102,25 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 
-	if (fd == -1 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!line)
-		return (NULL);
-	buffer = fill_line(fd, stash);
+	if (check_line(stash))
+	{
+		buffer = malloc(sizeof(char) * ft_strlen(stash, '\0') + 1);
+		if (!buffer)
+			return (NULL);
+		ft_strcpy_until(buffer, stash, '\0');
+	}
+	else
+		buffer = fill_line(fd, stash);
 	if (!buffer)
 		return (NULL);
-	ft_strcpy_until(line, buffer, '\n');
-	fill_stash(buffer, stash);
+	line = malloc(sizeof(char) * ft_strlen(buffer, '\n') + 1);
+	if (!line)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	line = get_my_line(line, buffer, stash);
 	return (line);
 }

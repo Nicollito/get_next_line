@@ -6,7 +6,7 @@
 /*   By: nimadela <nimadela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:07:43 by nimadela          #+#    #+#             */
-/*   Updated: 2024/12/19 14:26:38 by nimadela         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:09:07 by nimadela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ char	*get_next_line(int fd);
 char	*fill_line(int fd, char *line);
 char	*check_stash(char *stash);
 int		check_line(char *s);
-ssize_t	ft_strlen(char *s);
+ssize_t	ft_strlen(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
+void	ft_bzero(void *s, size_t n);
+char	*get_my_line(char *line, char *buffer, char *stash);
 
 #endif
